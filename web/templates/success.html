@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@1.20.0/dist/full.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+  <title>Team Circle Verification</title>
+  <!-- OG -->
+  <meta data-react-helmet="true" property="og:image" content="https://discord.com/assets/652f40427e1f5186ad54836074898279.png">
+  <meta property="og:type" content="website" data-react-helmet="true">
+  <meta property="og:url" content="https://circle-verify.sskate.me" data-react-helmet="true">
+  <meta property="og:site_name" content="Team Circle" data-react-helmet="true">
+  <meta property="og:title" content="Team Circle | 인증하기" data-react-helmet="true">
+  <meta property="og:description" content="Discord를 사용하면 손쉽게 음성, 영상, 텍스트로 이야기를 나눌 수 있답니다. 친구, 커뮤니티와 대화하고, 채팅하고, 어울려보세요." data-react-helmet="true">
+  <meta name="description" content="Discord를 사용하면 손쉽게 음성, 영상, 텍스트로 이야기를 나눌 수 있답니다. 친구, 커뮤니티와 대화하고, 채팅하고, 어울려보세요." data-react-helmet="true">
+  <style>
+    
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css');
+
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    body { 
+      font-family: 'Pretendard', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url("https://picsum.photos/2560/1440") no-repeat center;
+      background-size: cover;
+    }
+
+    body::before {
+      content: "";
+      position: absolute; z-index: 1;
+      top: 0; right: 0; bottom: 0; left: 0;
+      background-color: rgba(0,0,0,.7);
+
+    }
+
+    .login-form {
+      position: relative; z-index: 2;
+    }
+
+    .login-form h1 {
+      font-size: 32px; color: #ffffff;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .int-area { 
+      width: 400px; position: relative;
+      margin-top: 20px;
+    }
+
+    .int-area:first-child {
+      margin-top: 0;
+    }
+
+    .int-area input { 
+      width: 100%;
+      padding: 20px 10px 10px;
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid #999999;
+      font-size: 18px; color: #ffffff;
+      outline: none;
+
+    }
+
+    .int-area label {
+      position: absolute; left: 10px; top: 15px;
+      font-size: 18px; color: #999999;
+      transition: all .5s ease;
+    }
+
+    .int-area label.warning {
+      color: #ED4245 !important;
+      animation: warning .3s ease;
+      animation-iteration-count: 3;
+    }
+
+    @keyframes warning {
+      0% {transform: translateX(-8px);}
+      25% {transform: translateX(8px);}
+      50% {transform: translateX(-8px);}
+      75% {transform: translateX(8px);}
+    }
+
+
+    .int-area input:focus + label,
+    .int-area input:valid + label {
+      top: -2px;
+      font-size: 13px; color: #5865F2;
+    }
+
+    .btn-area {
+      margin-top: 30px;
+    }
+
+    .btn-area button {
+      width: 100%; height: 50px;
+      background: #5865F2;
+      color: #ffffff;
+      font-size: 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+
+    .btn-area a.link {
+      text-decoration: none;
+      color: white;
+    }
+
+    .caption {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .caption a {
+      font-size: 15px; color: #999999;
+      text-decoration: none;
+    }
+</style>
+</head>
+<body>
+  <section class="login-form">
+    <h1>Team Circle Verification</h1>
+    <form id="form" action="/" method="POST">      
+      <div class="int-area text-center flex" style="justify-content: center; align-items: center;">        
+        <h3 class="text-xl text-base-100">인증이 완료되었습니다!</h3>
+      </div>
+    </form>
+    <div class="caption">
+      <a href="javascript:;" id="channel_modal">Something's wrong?</a> <!-- 여기에서 확인하는 캡챠는 했냐 안했냐만 보는거고, 올바른 캡챠인진 플라스크 백엔드에서 처리합니다 -->
+    </div>
+  </section>
+
+  <input type="checkbox" id="modal" class="modal-toggle"> 
+  <div class="modal">
+    <div class="modal-box">
+      <h2 class="text-2xl font-bold card-title">Oops...</h2>
+      <p class="text-base-content text-opacity-40">reCaptcha가 올바르지 않습니다! 다시 시도해 주세요.</p> 
+      <div class="modal-action">
+        <label for="modal" class="btn">Close</label>
+      </div>
+    </div>
+  </div>
+
+  <input type="checkbox" id="modal_problem" class="modal-toggle"> 
+  <div class="modal">
+    <div class="modal-box">
+      <h2 class="text-2xl font-bold card-title">인증에 문제가 있나요?</h2>
+      <p class="text-base-content text-opacity-40"><a href="https://discord.com/users/902700864748273704" target="_blank" class="text-primary">SSKATE#0125</a>으로 문의 해주세요.</p> 
+      <div class="modal-action">
+        <label for="modal_problem" class="btn btn-primary">Close</label>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://js.hcaptcha.com/1/api.js?hl=en&recaptchacompat=off" async defer></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    let btn = $('#btn');
+    let channel_modal = $('#channel_modal');
+    let _form = document.body.querySelector('#form');
+
+    $(btn).on('click', function() {
+      if (document.body.querySelector('textarea').value == "") {
+        document.body.querySelector('#modal').checked = true;
+        return false;
+      } else {
+        _form.submit();
+        return true;
+      }
+    })
+
+    $(channel_modal).on('click', function() {
+      document.body.querySelector('#modal_problem').checked = true;
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+Django==4.0
+Flask==2.0.2
+pyjwt==1.7.1
+Flask-Discord==0.1.63
+python-dotenv==0.19.2
+disnake==2.3.0
+Flask-xCaptcha==0.5.2
+Flask-Limiter==2.0.4
+disnake-jishaku==2.6.5
